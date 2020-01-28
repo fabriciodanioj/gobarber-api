@@ -1,4 +1,7 @@
 node_modules
 .env
-.vscode
-yarn.lock
+
+tmp/*
+!tmp/.gitkeep
+
+dist
