@@ -11,14 +11,49 @@ class UserController {
 
       const { id, name, email, provider } = await User.create(req.body);
 
-      return res.send({
+      return res.status(201).send({
         id,
         name,
         email,
         provider,
       });
-    } catch (error) {
-      return res.send(error);
+    } catch (err) {
+      return res.send({
+        error: {
+          title: 'Create user failed',
+          messages: err.inner.map(mes => mes.message),
+        },
+      });
+    }
+  }
+
+  async delete(req, res) {
+    try {
+      await User.destroy({
+        where: { id: req.userId },
+      });
+
+      return res.send();
+    } catch (err) {
+      return res.send({
+        error: {
+          title: 'Delete user failed',
+          messages: err.inner.map(mes => mes.message),
+        },
+      });
+    }
+  }
+
+  async update(req, res) {
+    try {
+      return res.send({ ok: true });
+    } catch (err) {
+      return res.send({
+        error: {
+          title: 'Update user failed',
+          messages: err.inner.map(mes => mes.message),
+        },
+      });
     }
   }
 }
